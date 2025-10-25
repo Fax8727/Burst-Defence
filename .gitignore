@@ -1,0 +1,17 @@
+﻿# Unity
+Library/
+Temp/
+obj/
+Build/
+Builds/
+Logs/
+UserSettings/
+MemoryCaptures/
+
+# Visual Studio / Rider
+.vs/
+.vscode/
+*.sln
+*.csproj
+*.user
+*.userprefs
