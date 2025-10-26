@@ -82,7 +82,6 @@ public class BurstSystem : MonoBehaviour
         StartCoroutine(BurstFireCoroutine());
     }
 
-    // --- [ 2. BurstFireCoroutine 수정 (데미지 설정 코드 추가) ] ---
     IEnumerator BurstFireCoroutine()
     {
         isBursting = true;
@@ -123,8 +122,6 @@ public class BurstSystem : MonoBehaviour
         isBursting = false;
     }
 
-    // --- [ 3. (중요) 테스트용 함수도 코루틴만 호출하면 OK ] ---
-    // (BurstFireCoroutine이 수정되었기 때문에 이 함수는 수정할 필요가 없습니다.)
     public void ActivateBurstSkillForTest()
     {
         if (isBursting)

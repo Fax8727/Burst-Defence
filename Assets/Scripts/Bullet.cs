@@ -8,15 +8,17 @@ public class Bullet : MonoBehaviour
     public float moveSpeed = 20f;
     public float lifetime = 3.0f;
 
-    // --- [ 1. damage 변수 변경 ] ---
-    // public float damage = 10f; // 이 줄을 삭제하거나 주석 처리하고
-    private float damage; // 데미지 값을 PlayerController로부터 받아올 변수
+    // 넉백 변수가 더 이상 필요 없으므로 삭제
+    // public float knockbackForce = 50f; 
 
+    private float damage;
     private Rigidbody2D rb;
 
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+        // Kinematic + Continuous Collision Detection을 권장
+
         Invoke("DestroyBullet", lifetime);
     }
 
@@ -25,23 +27,42 @@ public class Bullet : MonoBehaviour
         rb.linearVelocity = transform.up * moveSpeed;
     }
 
-    // --- [ 2. 데미지를 외부에서 설정하는 함수 추가 ] ---
-    /// <summary>
-    /// PlayerController가 총알을 생성할 때 이 함수를 호출하여 데미지를 설정합니다.
-    /// </summary>
     public void SetDamage(float newDamage)
     {
         damage = newDamage;
     }
 
-    // --- [ 3. OnTriggerEnter2D는 수정할 필요 없음 ] ---
-    // (이 함수는 'damage' 변수를 그대로 사용하므로 잘 작동합니다)
-    void OnTriggerEnter2D(Collider2D other)
+    // --- [ (핵심 수정) OnTriggerEnter2D -> OnCollisionEnter2D ] ---
+    // 총알(Collider)이 다른 Collider와 '물리 충돌'했을 때
+    // 매개변수가 'Collider2D'에서 'Collision2D'로 바뀝니다.
+    void OnCollisionEnter2D(Collision2D other)
     {
-        HealthSystem health = other.GetComponent<HealthSystem>();
-        if (health != null && health.entityType == HealthSystem.EntityType.Enemy)
+        // 부딪힌 대상의 GameObject에서 HealthSystem을 찾습니다.
+        HealthSystem health = other.gameObject.GetComponent<HealthSystem>();
+
+        if (health != null)
         {
-            health.TakeDamage(damage);
+            // 1. 대상이 'Enemy'일 경우: 데미지를 주고 파괴
+            // (넉백은 물리 엔진이 자동으로 처리)
+            if (health.entityType == HealthSystem.EntityType.Enemy)
+            {
+                health.TakeDamage(damage);
+                DestroyBullet();
+            }
+            // 2. 대상이 'Core'일 경우: 그냥 파괴 (관통 방지)
+            else if (health.entityType == HealthSystem.EntityType.Core)
+            {
+                DestroyBullet();
+            }
+            // (플레이어와 부딪혀도 파괴)
+            else if (health.entityType == HealthSystem.EntityType.Player)
+            {
+                DestroyBullet();
+            }
+        }
+        else
+        {
+            // HealthSystem이 없는 대상(예: 미래에 만들 '벽')에 부딪혀도 파괴
             DestroyBullet();
         }
     }

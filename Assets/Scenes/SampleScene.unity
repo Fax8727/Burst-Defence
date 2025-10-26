@@ -355,7 +355,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.66263705, b: 0.2028302, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -530,6 +530,7 @@ GameObject:
   - component: {fileID: 462632963}
   - component: {fileID: 462632966}
   - component: {fileID: 462632965}
+  - component: {fileID: 462632967}
   m_Layer: 0
   m_Name: Core
   m_TagString: Untagged
@@ -637,7 +638,7 @@ CircleCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
@@ -658,6 +659,33 @@ MonoBehaviour:
   entityType: 1
   maxHealth: 100
   respawnTime: 5
+--- !u!50 &462632967
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 462632961}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!1 &475303065
 GameObject:
   m_ObjectHideFlags: 0
@@ -800,7 +828,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 10
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -1188,7 +1216,7 @@ Transform:
   m_GameObject: {fileID: 740909553}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.1, z: 0}
+  m_LocalPosition: {x: 0, y: 0.12, z: 0}
   m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1416,25 +1444,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waves:
   - waveName: Wave 1
-    enemyPrefab: {fileID: 8980873387168252921, guid: 06fa949c9cd1a39428d318549617051e, type: 3}
-    count: 5
-    spawnInterval: 3
+    enemyGroups:
+    - enemyPrefab: {fileID: 8980873387168252921, guid: 06fa949c9cd1a39428d318549617051e, type: 3}
+      count: 3
+      spawnInterval: 0.25
+    - enemyPrefab: {fileID: 8980873387168252921, guid: 992b64aeaaf28a648abd6ea338075c6e, type: 3}
+      count: 4
+      spawnInterval: 0.25
+    - enemyPrefab: {fileID: 8980873387168252921, guid: 06fa949c9cd1a39428d318549617051e, type: 3}
+      count: 5
+      spawnInterval: 0.25
+    timeBetweenGroups: 5
   - waveName: Wave 2
-    enemyPrefab: {fileID: 8980873387168252921, guid: 06fa949c9cd1a39428d318549617051e, type: 3}
-    count: 8
-    spawnInterval: 2.5
+    enemyGroups:
+    - enemyPrefab: {fileID: 0}
+      count: 0
+      spawnInterval: 0
+    - enemyPrefab: {fileID: 0}
+      count: 0
+      spawnInterval: 0
+    - enemyPrefab: {fileID: 0}
+      count: 0
+      spawnInterval: 0
+    timeBetweenGroups: 1
   - waveName: Wave 3
-    enemyPrefab: {fileID: 8980873387168252921, guid: 06fa949c9cd1a39428d318549617051e, type: 3}
-    count: 10
-    spawnInterval: 2
+    enemyGroups: []
+    timeBetweenGroups: 1
   - waveName: Wave 4
-    enemyPrefab: {fileID: 8980873387168252921, guid: 06fa949c9cd1a39428d318549617051e, type: 3}
-    count: 15
-    spawnInterval: 1.75
+    enemyGroups: []
+    timeBetweenGroups: 1
   - waveName: Wave 5
-    enemyPrefab: {fileID: 8980873387168252921, guid: 06fa949c9cd1a39428d318549617051e, type: 3}
-    count: 20
-    spawnInterval: 1.5
+    enemyGroups: []
+    timeBetweenGroups: 1
   spawnRadius: 12
   timeBetweenWaves: 5
 --- !u!4 &965817544
@@ -2249,7 +2290,7 @@ Transform:
   m_GameObject: {fileID: 1563617681}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: -2, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2438,7 +2479,7 @@ MonoBehaviour:
     m_SelectOnRight: {fileID: 0}
   m_Transition: 1
   m_Colors:
-    m_NormalColor: {r: 1, g: 0.46472234, b: 0, a: 1}
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
@@ -2639,8 +2680,8 @@ RectTransform:
   m_Children:
   - {fileID: 1442505651}
   - {fileID: 370978203}
-  - {fileID: 969456484}
   - {fileID: 1670068262}
+  - {fileID: 969456484}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}

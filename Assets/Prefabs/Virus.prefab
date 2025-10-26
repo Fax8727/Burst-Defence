@@ -105,7 +105,7 @@ Rigidbody2D:
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 8
-  m_AngularDamping: 0.05
+  m_AngularDamping: 0.1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -181,5 +181,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c9ef69c774247489a4c267918186ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 1
   attackDamage: 10
+  isTanker: 0
+  tankerHitCount: 3
+  knockbackForce: 100
+  speedIncreasePerHit: 10
+  shrinkFactorPerHit: 0.85
