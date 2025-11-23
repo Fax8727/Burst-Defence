@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 6621320137862781157}
   - component: {fileID: 6729346452799224599}
   m_Layer: 0
-  m_Name: Virus 1
+  m_Name: Virus_Durable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -30,8 +30,8 @@ Transform:
   m_GameObject: {fileID: 8980873387168252921}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.0266545, y: -0.12882397, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 3, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -104,8 +104,8 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDamping: 8
-  m_AngularDamping: 0.05
+  m_LinearDamping: 4
+  m_AngularDamping: 0.1
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
@@ -167,8 +167,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   entityType: 2
-  maxHealth: 50
+  maxHealth: 300
   respawnTime: 5
+  healthBarPrefab: {fileID: 5236401311481980672, guid: fc7db7baff8d74645ad4d79060dd38b0, type: 3}
+  healthBarOffset: {x: 0, y: -0.6, z: 0}
 --- !u!114 &6729346452799224599
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -181,5 +183,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8c9ef69c774247489a4c267918186ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
-  attackDamage: 10
+  moveSpeed: 5
+  attackDamage: 30
+  healthToMassMultiplier: 0.1
+  isTanker: 1
+  tankerHitCount: 3
+  knockbackForce: 25
+  scaleReductionFactor: 0.6
+  speedReductionFactor: 0.9
+  damageReductionFactor: 0.5
+  knockbackReductionFactor: 0.6

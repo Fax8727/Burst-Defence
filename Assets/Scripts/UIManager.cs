@@ -6,6 +6,8 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
 
+    public RectTransform mainCanvasRect;
+
     [Header("Player Health UI")]
     public Slider playerHealthSlider;
     public TextMeshProUGUI playerHealthText;
