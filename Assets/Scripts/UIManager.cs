@@ -20,7 +20,6 @@ public class UIManager : MonoBehaviour
     public TextMeshProUGUI waveText;
     public TextMeshProUGUI enemiesLeftText;
 
-    // --- [ 1. Burst 게이지 슬라이더 변수 추가 ] ---
     [Header("Burst Skill UI")]
     public Slider burstGaugeSlider;
 
@@ -35,14 +34,12 @@ public class UIManager : MonoBehaviour
             Destroy(gameObject);
         }
 
-        // --- [ 2. (선택) Burst 게이지가 있다면 0으로 초기화 ] ---
         if (burstGaugeSlider != null)
         {
             burstGaugeSlider.value = 0;
         }
     }
 
-    // (기존 체력바 함수들...)
     public void InitializeHealthBar(HealthSystem.EntityType type, float maxHealth)
     {
         Slider sliderToUse = null;
@@ -98,7 +95,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // (기존 웨이브 텍스트 함수들...)
     public void UpdateWaveText(int currentWave)
     {
         if (waveText != null)
@@ -133,11 +129,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    // --- [ 3. Burst 게이지 관련 함수 2개 추가 ] ---
-
-    /// <summary>
-    /// Burst 게이지 슬라이더의 최대값을 설정합니다. (BurstSystem의 Start()에서 호출)
-    /// </summary>
     public void InitializeBurstGauge(float maxGauge)
     {
         if (burstGaugeSlider != null)
@@ -147,9 +138,6 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Burst 게이지 슬라이더의 현재값을 업데이트합니다.
-    /// </summary>
     public void UpdateBurstGauge(float currentGauge)
     {
         if (burstGaugeSlider != null)

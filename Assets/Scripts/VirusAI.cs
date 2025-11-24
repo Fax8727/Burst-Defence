@@ -37,14 +37,12 @@ public class VirusAI : MonoBehaviour
     [Range(0.1f, 1f)]
     public float knockbackReductionFactor = 0.9f;
 
-    // (기존 Tanker Settings의 speedIncreasePerHit 등은 삭제됨)
 
     private int currentTankerHits = 0;
     private Transform currentTarget;
     private Rigidbody2D rb;
     private HealthSystem selfHealth;
 
-    // (OnEnable, OnDisable, Start, FixedUpdate, Switch... 함수들은 모두 동일)
     void OnEnable()
     {
         HealthSystem.OnPlayerDied += SwitchTargetToCore;
@@ -74,9 +72,6 @@ public class VirusAI : MonoBehaviour
         }
         currentTankerHits = 0;
 
-        // 중요: 프리팹이 생성될 때 인스펙터의 '기본값'을 사용하므로
-        // 이 스크립트의 moveSpeed, attackDamage 등은 수정할 필요 없이 
-        // 프리팹이 가진 값을 그대로 사용합니다.
 
         if (HealthSystem.IsPlayerDead)
         {
@@ -98,7 +93,6 @@ public class VirusAI : MonoBehaviour
         Vector2 direction = (Vector2)currentTarget.position - rb.position;
         direction.Normalize();
 
-        // 현재 'moveSpeed' 변수 값을 사용 (이 값은 충돌 시 감소함)
         rb.AddForce(direction * moveSpeed * 10f);
 
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -115,7 +109,6 @@ public class VirusAI : MonoBehaviour
         currentTarget = HealthSystem.PlayerTransform;
     }
 
-    // --- [ 2. (핵심 수정) OnCollisionEnter2D ] ---
     void OnCollisionEnter2D(Collision2D other)
     {
         HealthSystem targetHealth = other.gameObject.GetComponent<HealthSystem>();
@@ -126,10 +119,8 @@ public class VirusAI : MonoBehaviour
 
         if (isTanker)
         {
-            // 1. 현재 'attackDamage'로 데미지를 줍니다.
             targetHealth.TakeDamage(attackDamage);
 
-            // 2. 현재 'knockbackForce'로 넉백을 줍니다.
             Vector2 knockbackDir = (other.transform.position - transform.position).normalized;
             Rigidbody2D targetRb = other.gameObject.GetComponent<Rigidbody2D>();
             if (targetRb != null && targetRb.bodyType == RigidbodyType2D.Dynamic)
@@ -138,17 +129,14 @@ public class VirusAI : MonoBehaviour
             }
             rb.AddForce(-knockbackDir * knockbackForce, ForceMode2D.Impulse);
 
-            // 3. 히트 카운트 증가
             currentTankerHits++;
             if (currentTankerHits >= tankerHitCount)
             {
-                // (a) 3번 다 때렸으면 자폭
                 if (selfHealth != null) selfHealth.TakeDamage(selfHealth.maxHealth);
                 else Destroy(gameObject);
             }
             else
             {
-                // (b) 아직 살아있다면: 4가지 스탯을 모두 퍼센트로 감소시킴
 
                 // 크기 (Scale)
                 transform.localScale *= scaleReductionFactor;
@@ -163,7 +151,7 @@ public class VirusAI : MonoBehaviour
                 knockbackForce *= knockbackReductionFactor;
             }
         }
-        else // 탱커가 아닐 경우 (자폭)
+        else
         {
             if (other.gameObject.transform == currentTarget)
             {
@@ -175,13 +163,7 @@ public class VirusAI : MonoBehaviour
     }
     public void ApplyStatModifiers(WaveStatData stats)
     {
-        // (예: 기본 50 * 배율 1.1 = 55)
         moveSpeed *= stats.speedMultiplier;
-
-        // (예: 기본 10 * 배율 1.3 = 13)
         attackDamage *= stats.damageMultiplier;
-
-        // (참고: 탱커의 넉백, 데미지 감소 등도 이 함수에서 배율을 적용할 수 있습니다)
-        // knockbackForce *= stats.knockbackMultiplier; 
     }
 }

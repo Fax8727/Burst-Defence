@@ -1,6 +1,5 @@
 using UnityEngine;
 
-// Assets 폴더에서 우클릭 > Create > Burst Defense/Wave Stat Data 로 생성 가능
 [CreateAssetMenu(fileName = "WaveStat_01", menuName = "Burst Defense/Wave Stat Data")]
 public class WaveStatData : ScriptableObject
 {
@@ -14,7 +13,4 @@ public class WaveStatData : ScriptableObject
 
     [Tooltip("공격력 배율 (1.0 = 100%, 1.3 = 130%)")]
     public float damageMultiplier = 1f;
-
-    // (참고: 질량(Mass)은 HealthSystem의 체력에 비례하므로
-    // healthMultiplier가 높아지면 자동으로 무거워져서 넉백 저항이 강해집니다.)
 }

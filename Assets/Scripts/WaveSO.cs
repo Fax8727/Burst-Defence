@@ -1,11 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-// --- 데이터의 가장 작은 단위 ---
-/// <summary>
-/// "기본형 5마리", "탱커 2마리" 등
-/// 한 번에 '동시'에 스폰할 적의 그룹 정보입니다.
-/// </summary>
 [System.Serializable]
 public class SpawnGroup
 {
@@ -13,12 +8,6 @@ public class SpawnGroup
     public int count;
 }
 
-// --- 중간 단위 (1-1, 1-2) ---
-/// <summary>
-/// "세부 웨이브" (Sub-Wave)입니다.
-/// 여러 'SpawnGroup'을 동시에 스폰시키고,
-/// 다음 세부 웨이브까지의 대기 시간을 가집니다.
-/// </summary>
 [System.Serializable]
 public class SubWave
 {
@@ -29,19 +18,15 @@ public class SubWave
     public float timeUntilNextSubWave;
 }
 
-// --- 가장 큰 단위 (Wave 1 SO, Wave 2 SO) ---
-/// <summary>
-/// "메인 웨이브 (Wave 1, Wave 2)"의 전체 설계를 담는 스크립터블 오브젝트입니다.
-/// </summary>
 [CreateAssetMenu(fileName = "WaveConfig_01", menuName = "Burst Defense/Wave Configuration (SO)")]
 public class WaveSO : ScriptableObject
 {
     [Header("Display")]
-    public string waveName; // (UI 표시용)
+    public string waveName;
 
     [Header("Stats")]
     [Tooltip("이 웨이브의 모든 적에게 적용될 스탯 배율 SO")]
-    public WaveStatData waveStats; // (이전에 만든 WaveStatData SO)
+    public WaveStatData waveStats;
 
     [Header("Spawning Logic")]
     [Tooltip("이 웨이브를 구성하는 '세부 웨이브(Sub-Wave)'의 목록")]

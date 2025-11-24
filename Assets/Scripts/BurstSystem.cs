@@ -15,15 +15,12 @@ public class BurstSystem : MonoBehaviour
     public int burstCount = 3;
     public float timeBetweenBursts = 0.5f;
 
-    // --- [ 1. (중요) Burst 스킬 총알의 데미지 변수 추가 ] ---
-    // (인스펙터에서 이 값을 조절할 수 있습니다!)
     public float burstProjectileDamage = 30f;
 
     private bool isBursting = false;
     private Transform firePoint;
     public bool IsGaugeFull => currentBurstGauge >= maxBurstGauge;
 
-    // (OnEnable, OnDisable, Start, SetFirePoint, HandleEnemyDeath 함수는 동일)
     void OnEnable()
     {
         HealthSystem.OnEnemyDied += HandleEnemyDeath;
@@ -91,23 +88,22 @@ public class BurstSystem : MonoBehaviour
 
         for (int b = 0; b < burstCount; b++)
         {
-            // 샷건 발사 로직
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(AudioManager.Instance.burstClip);
+            }
             for (int i = 0; i < projectileCount; i++)
             {
                 float currentAngle = startAngle + (i * angleStep);
                 Quaternion spreadRotation = Quaternion.Euler(0, 0, currentAngle);
                 Quaternion finalRotation = firePoint.rotation * spreadRotation;
 
-                // 1. Burst 총알 생성
                 GameObject projectileGO = Instantiate(burstProjectilePrefab, firePoint.position, finalRotation);
 
-                // 2. 생성된 총알의 'Bullet' 스크립트를 가져옴
                 Bullet bulletScript = projectileGO.GetComponent<Bullet>();
 
-                // 3. 'Bullet' 스크립트가 있다면, 데미지 값을 설정
                 if (bulletScript != null)
                 {
-                    // 'burstProjectileDamage' 변수 값을 총알에 전달
                     bulletScript.SetDamage(burstProjectileDamage);
                 }
                 else
